@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pankaj Piplodiya — Shopify Developer</title>
+<meta name="description" content="Pankaj Piplodiya — Shopify Developer. 2+ years building, customizing and shipping high-performing Shopify stores.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= MOBILE TOP BAR ================= -->
+<div class="mobile-topbar">
+  <div class="brand">
+    <span class="dot"></span>
+    pankaj<span class="mono dim">.dev</span>
+  </div>
+  <button class="icon-btn" id="drawerOpenBtn" aria-label="Open navigation">
+    <i data-lucide="menu"></i>
+  </button>
+</div>
+
+<!-- ================= MOBILE DRAWER ================= -->
+<div class="drawer-overlay" id="drawerOverlay">
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <div class="drawer-panel">
+    <div class="drawer-head">
+      <span class="mono dim label-caps">NAVIGATE</span>
+      <button class="icon-btn" id="drawerCloseBtn" aria-label="Close navigation">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <nav class="sidebar-nav" id="mobileNav"></nav>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- ================= DESKTOP SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="dot"></span>
+      pankaj<span class="mono dim">.dev</span>
+    </div>
+    <div class="availability mono dim">
+      <i data-lucide="circle" class="pulse-dot"></i>
+      Available for freelance
+    </div>
+
+    <div class="mono dim label-caps explorer-label">EXPLORER</div>
+    <nav class="sidebar-nav" id="desktopNav"></nav>
+
+    <div class="sidebar-footer">
+      <div class="social-row">
+        <a href="mailto:pankajpiplodiya2000@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
+        <a href="tel:+917024867479" aria-label="Phone"><i data-lucide="phone"></i></a>
+        <a href="https://linkedin.com/in/pankaj-068508210" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="main">
+
+    <!-- HOME / HERO -->
+    <section id="home" class="section hero-section">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            SHOPIFY DEVELOPER · DEWAS, INDIA
+          </div>
+          <h1 class="hero-title">
+            I turn <span class="teal">Liquid</span><br>
+            into storefronts<br>
+            that sell.
+          </h1>
+          <p class="hero-sub">
+            Pankaj Piplodiya — 2+ years building, customizing, and shipping high-performing Shopify stores, from
+            theme architecture to third-party integrations.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-nav="contact">
+              Start a project <i data-lucide="arrow-up-right" size="15"></i>
+            </button>
+            <button class="btn btn-outline" data-nav="experience">
+              See my work
+            </button>
+          </div>
+          <div class="hero-meta mono dim">
+            <div class="meta-stat"><strong>2+ yrs</strong>Shopify development</div>
+            <div class="meta-stat"><strong>3</strong>companies worked with</div>
+            <div class="meta-stat"><strong>2</strong>languages spoken</div>
+          </div>
+        </div>
+
+        <!-- device mock -->
+        <div class="device-mock">
+          <div class="device-topbar">
+            <div class="device-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="device-tabs mono">
+              <button class="device-tab active" data-tab="code">theme.liquid</button>
+              <button class="device-tab" data-tab="preview">Preview</button>
+            </div>
+            <div class="mono dim device-url">localhost:9292</div>
+          </div>
+
+          <div class="device-body">
+            <div class="tab-panel active" data-panel="code">
+              <div class="code-block mono">
+                <div><span class="ln">01</span>&lt;<span class="gold">section</span> <span class="teal">class</span>=<span class="green">"hero-banner"</span>&gt;</div>
+                <div><span class="ln">02</span>&nbsp;&nbsp;{% <span class="purple">if</span> section.settings.image %}</div>
+                <div><span class="ln">03</span>&nbsp;&nbsp;&nbsp;&nbsp;{{ section.settings.image <span class="purple">| image_url</span> }}</div>
+                <div><span class="ln">04</span>&nbsp;&nbsp;{% <span class="purple">endif</span> %}</div>
+                <div><span class="ln">05</span>&nbsp;&nbsp;&lt;<span class="gold">h1</span>&gt;{{ section.settings.title }}&lt;/<span class="gold">h1</span>&gt;</div>
+                <div><span class="ln">06</span>&nbsp;&nbsp;&lt;<span class="gold">a</span> <span class="teal">href</span>=<span class="green">"/collections/all"</span>&gt;</div>
+                <div><span class="ln">07</span>&nbsp;&nbsp;&nbsp;&nbsp;Shop now</div>
+                <div><span class="ln">08</span>&nbsp;&nbsp;&lt;/<span class="gold">a</span>&gt;</div>
+                <div><span class="ln">09</span>&lt;/<span class="gold">section</span>&gt;</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-panel="preview">
+              <div class="preview-mock">
+                <div class="preview-header mono dim">
+                  <span>Rivet &amp; Rose Co.</span>
+                  <span>Cart (2)</span>
+                </div>
+                <div class="preview-hero">
+                  <h3>Summer Restock</h3>
+                  <p>New arrivals, 30% off this week only</p>
+                </div>
+                <div class="preview-products">
+                  <div class="preview-product">
+                    <div class="preview-swatch"></div>
+                    <div class="mono price">₹1,299</div>
+                  </div>
+                  <div class="preview-product">
+                    <div class="preview-swatch"></div>
+                    <div class="mono price">₹899</div>
+                  </div>
+                  <div class="preview-product">
+                    <div class="preview-swatch"></div>
+                    <div class="mono price">₹1,599</div>
+                  </div>
+                </div>
+                <div class="preview-cta mono">Add to cart</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section reveal">
+      <div class="wrap">
+        <div class="eyebrow"><span class="eyebrow-line"></span>ABOUT</div>
+        <h2 class="section-title">Profile</h2>
+        <div class="about-grid">
+          <div class="about-text dim">
+            <p><b class="text-main">2+ years</b> as a Shopify Developer at IT-Geeks, specializing in
+              e-commerce solutions including theme customization and app integrations.</p>
+            <p>For the past <b class="text-main">6 months</b>, I've been building on that foundation at
+              Witty Technical Solution, developing high-performing Shopify stores for clients.</p>
+            <p>I also completed a <b class="text-main">6-month internship</b> at PixelNX, where I gained
+              hands-on experience in Android app development with Core Java and the Android SDK — a background
+              that shapes how I think about performance and structure on the storefront side too.</p>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-card"><div class="stat-num teal">2+</div><div class="stat-label dim">Years in Shopify development</div></div>
+            <div class="stat-card"><div class="stat-num teal">3</div><div class="stat-label dim">Teams collaborated with</div></div>
+            <div class="stat-card"><div class="stat-num teal">6mo</div><div class="stat-label dim">Android dev internship</div></div>
+            <div class="stat-card"><div class="stat-num teal">2</div><div class="stat-label dim">Languages — English, Hindi</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section reveal">
+      <div class="wrap">
+        <div class="eyebrow"><span class="eyebrow-line"></span>EXPERIENCE</div>
+        <h2 class="section-title">Where I've built stores</h2>
+        <p class="section-desc dim">From theme customization to client-facing technical support, here's the path so far.</p>
+
+        <div class="timeline">
+          <div class="timeline-line"></div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot current"></span>
+            <div class="timeline-head">
+              <div class="timeline-role">Shopify Developer</div>
+              <div class="timeline-period mono">2024 — Present</div>
+            </div>
+            <div class="timeline-org dim">Witty Technical Solution · Ahmedabad</div>
+            <ul class="timeline-list dim">
+              <li>Led theme development and customization to deliver responsive, visually appealing, user-friendly online stores</li>
+              <li>Integrated third-party applications and APIs to enhance store functionality and streamline customer experience</li>
+              <li>Maintained high standards of code quality and design aligned with Shopify development best practices</li>
+              <li>Acted as a key point of contact for clients, providing technical support and recommendations on store performance</li>
+              <li>Used Klaviyo and Mailchimp to build targeted email campaigns, improving retention and driving sales</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-head">
+              <div class="timeline-role">Shopify Developer</div>
+              <div class="timeline-period mono">2022 — 2024</div>
+            </div>
+            <div class="timeline-org dim">IT-Geeks · Dewas, M.P.</div>
+            <ul class="timeline-list dim">
+              <li>Developed and customized Shopify themes to create responsive, user-friendly ecommerce stores</li>
+              <li>Integrated third-party apps and APIs to enhance store functionality and improve customer experience</li>
+              <li>Collaborated with cross-functional teams to design and implement custom features based on client requirements</li>
+              <li>Worked with Liquid, HTML, CSS, JavaScript, and Shopify's API to build and maintain dynamic store elements</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item last">
+            <span class="timeline-dot"></span>
+            <div class="timeline-head">
+              <div class="timeline-role">Android Developer Intern</div>
+              <div class="timeline-period mono">6 months</div>
+            </div>
+            <div class="timeline-org dim">PixelNX</div>
+            <ul class="timeline-list dim">
+              <li>Gained hands-on experience in Android app development, focusing on Core Java and the Android SDK</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section reveal">
+      <div class="wrap skills-grid">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span>SKILLS</div>
+          <h2 class="section-title">What I work with</h2>
+          <div class="chip-row">
+            <span class="chip on">Shopify Development</span>
+            <span class="chip on">Liquid Template Language</span>
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">jQuery</span>
+            <span class="chip">E-commerce Solutions</span>
+            <span class="chip">Third-party Integration</span>
+            <span class="chip">Responsive Web Design</span>
+            <span class="chip">Troubleshooting &amp; Debugging</span>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span>LANGUAGES</div>
+          <h2 class="section-title">Communication</h2>
+          <div class="lang-grid">
+            <div class="lang-bar">
+              <span class="lang-name">English</span>
+              <div class="lang-track"><div class="lang-fill" style="width:90%"></div></div>
+              <span class="mono dim lang-sub">Fluent</span>
+            </div>
+            <div class="lang-bar">
+              <span class="lang-name">Hindi</span>
+              <div class="lang-track"><div class="lang-fill" style="width:100%"></div></div>
+              <span class="mono dim lang-sub">Native</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="section reveal">
+      <div class="wrap">
+        <div class="eyebrow"><span class="eyebrow-line"></span>EDUCATION</div>
+        <h2 class="section-title">Academic background</h2>
+        <div class="edu-grid">
+          <div class="edu-card">
+            <div class="edu-year mono gold">2018 — 2022</div>
+            <div class="edu-name">MIT Indore</div>
+            <div class="edu-org dim">RGPV University</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-year mono gold">Passed 2018</div>
+            <div class="edu-name">12th Standard</div>
+            <div class="edu-org dim">Sardana Public School</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-year mono gold">Passed 2016</div>
+            <div class="edu-name">10th Standard</div>
+            <div class="edu-org dim">The Guardian High School</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section reveal">
+      <div class="wrap">
+        <div class="contact-card">
+          <div>
+            <h2 class="contact-title">Let's build your store.</h2>
+            <p class="dim contact-desc">Whether it's a new theme, a tricky integration, or a store that just needs to run faster — I'm glad to talk it through.</p>
+          </div>
+          <div class="contact-rows">
+            <div class="contact-row">
+              <div class="contact-icon"><i data-lucide="mail"></i></div>
+              <div><div class="mono dim contact-label">EMAIL</div><div><a href="mailto:pankajpiplodiya2000@gmail.com">pankajpiplodiya2000@gmail.com</a></div></div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-icon"><i data-lucide="phone"></i></div>
+              <div><div class="mono dim contact-label">PHONE</div><div><a href="tel:+917024867479">+91 70248 67479</a></div></div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-icon"><i data-lucide="linkedin"></i></div>
+              <div><div class="mono dim contact-label">LINKEDIN</div><div><a href="https://linkedin.com/in/pankaj-068508210" target="_blank" rel="noopener noreferrer">linkedin.com/in/pankaj-068508210</a></div></div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-icon"><i data-lucide="map-pin"></i></div>
+              <div><div class="mono dim contact-label">LOCATION</div><div>94 Ramnagar, Dewas, M.P.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer mono dim">
+      © 2026 Pankaj Piplodiya — Built with Liquid, HTML, CSS &amp; JavaScript.
+    </footer>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
