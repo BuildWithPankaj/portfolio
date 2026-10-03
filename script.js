@@ -48,10 +48,10 @@ function setActiveNav(id) {
 }
 
 function scrollToSection(id) {
-  const section = document.getElementById(id);
+  const el = document.getElementById(id);
 
-  if (section) {
-    section.scrollIntoView({
+  if (el) {
+    el.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
@@ -69,116 +69,77 @@ function scrollToSection(id) {
 const drawerOverlay =
   document.getElementById("drawerOverlay");
 
-const drawerOpenBtn =
-  document.getElementById("drawerOpenBtn");
-
-const drawerCloseBtn =
-  document.getElementById("drawerCloseBtn");
-
-const drawerBackdrop =
-  document.getElementById("drawerBackdrop");
-
 
 function openDrawer() {
-  if (!drawerOverlay) return;
-
-  drawerOverlay.classList.add("open");
-
-  document.body.style.overflow = "hidden";
+  if (drawerOverlay) {
+    drawerOverlay.classList.add("open");
+  }
 }
 
 
 function closeDrawer() {
-  if (!drawerOverlay) return;
-
-  drawerOverlay.classList.remove("open");
-
-  document.body.style.overflow = "";
+  if (drawerOverlay) {
+    drawerOverlay.classList.remove("open");
+  }
 }
 
 
-drawerOpenBtn?.addEventListener(
-  "click",
-  openDrawer
-);
-
-drawerCloseBtn?.addEventListener(
-  "click",
-  closeDrawer
-);
-
-drawerBackdrop?.addEventListener(
-  "click",
-  closeDrawer
-);
+document
+  .getElementById("drawerOpenBtn")
+  ?.addEventListener("click", openDrawer);
 
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
+document
+  .getElementById("drawerCloseBtn")
+  ?.addEventListener("click", closeDrawer);
+
+
+document
+  .getElementById("drawerBackdrop")
+  ?.addEventListener("click", closeDrawer);
+
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
     closeDrawer();
   }
 });
 
 
 // ============================================================
-// HERO BUTTON NAVIGATION
+// HERO / NAV BUTTONS
 // ============================================================
 
-document
-  .querySelectorAll("[data-nav]")
-  .forEach((button) => {
-
-    button.addEventListener("click", () => {
-
-      const target =
-        button.dataset.nav;
-
-      if (target) {
-        scrollToSection(target);
-      }
-
-    });
-
+document.querySelectorAll("[data-nav]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    scrollToSection(btn.dataset.nav);
   });
+});
 
 
 // ============================================================
-// DEVICE MOCK TABS
+// HERO DEVICE MOCK TABS
 // ============================================================
 
-const deviceTabs =
-  document.querySelectorAll(".device-tab");
-
-const tabPanels =
-  document.querySelectorAll(".tab-panel");
-
-
-deviceTabs.forEach((tab) => {
-
+document.querySelectorAll(".device-tab").forEach((tab) => {
   tab.addEventListener("click", () => {
 
-    const targetTab =
-      tab.dataset.tab;
-
-    deviceTabs.forEach((item) => {
-      item.classList.remove("active");
+    document.querySelectorAll(".device-tab").forEach((t) => {
+      t.classList.remove("active");
     });
 
-    tabPanels.forEach((panel) => {
+    document.querySelectorAll(".tab-panel").forEach((panel) => {
       panel.classList.remove("active");
     });
 
     tab.classList.add("active");
 
-    const selectedPanel =
-      document.querySelector(
-        `.tab-panel[data-panel="${targetTab}"]`
-      );
-
-    selectedPanel?.classList.add("active");
-
+    document
+      .querySelector(
+        `.tab-panel[data-panel="${tab.dataset.tab}"]`
+      )
+      ?.classList.add("active");
   });
-
 });
 
 
@@ -186,39 +147,28 @@ deviceTabs.forEach((tab) => {
 // SCROLL SPY
 // ============================================================
 
-const sections =
-  NAV_ITEMS
-    .map(({ id }) =>
-      document.getElementById(id)
-    )
-    .filter(Boolean);
+const sections = NAV_ITEMS
+  .map(({ id }) => document.getElementById(id))
+  .filter(Boolean);
 
 
-const spyObserver =
-  new IntersectionObserver(
+const spyObserver = new IntersectionObserver(
+  (entries) => {
 
-    (entries) => {
+    entries.forEach((entry) => {
 
-      entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setActiveNav(entry.target.id);
+      }
 
-        if (entry.isIntersecting) {
-          setActiveNav(
-            entry.target.id
-          );
-        }
+    });
 
-      });
-
-    },
-
-    {
-      rootMargin:
-        "-35% 0px -50% 0px",
-
-      threshold: 0,
-    }
-
-  );
+  },
+  {
+    rootMargin: "-35% 0px -50% 0px",
+    threshold: 0,
+  }
+);
 
 
 sections.forEach((section) => {
@@ -227,120 +177,48 @@ sections.forEach((section) => {
 
 
 // ============================================================
-// SCROLL REVEAL ANIMATION
+// SCROLL REVEAL
 // ============================================================
 
-const revealElements =
-  document.querySelectorAll(".reveal");
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+
+    entries.forEach((entry) => {
+
+      if (entry.isIntersecting) {
+
+        entry.target.classList.add("in-view");
+
+        revealObserver.unobserve(
+          entry.target
+        );
+      }
+
+    });
+
+  },
+  {
+    threshold: 0.12,
+  }
+);
 
 
-const revealObserver =
-  new IntersectionObserver(
-
-    (entries) => {
-
-      entries.forEach((entry) => {
-
-        if (entry.isIntersecting) {
-
-          entry.target.classList.add(
-            "in-view"
-          );
-
-          revealObserver.unobserve(
-            entry.target
-          );
-
-        }
-
-      });
-
-    },
-
-    {
-      threshold: 0.12,
-    }
-
-  );
-
-
-revealElements.forEach((element) => {
+document.querySelectorAll(".reveal").forEach((element) => {
   revealObserver.observe(element);
 });
 
 
 // ============================================================
-// PROJECT CARD HOVER SUPPORT
+// BUILD NAVIGATION
 // ============================================================
 
-const projectCards =
-  document.querySelectorAll(".project-card");
+buildNav(
+  document.getElementById("desktopNav")
+);
 
-
-projectCards.forEach((card) => {
-
-  card.addEventListener(
-    "mouseenter",
-    () => {
-      card.classList.add(
-        "is-hovered"
-      );
-    }
-  );
-
-  card.addEventListener(
-    "mouseleave",
-    () => {
-      card.classList.remove(
-        "is-hovered"
-      );
-    }
-  );
-
-});
-
-
-// ============================================================
-// EXTERNAL LINKS
-// ============================================================
-
-document
-  .querySelectorAll(
-    'a[target="_blank"]'
-  )
-  .forEach((link) => {
-
-    if (
-      !link.hasAttribute("rel")
-    ) {
-
-      link.setAttribute(
-        "rel",
-        "noopener noreferrer"
-      );
-
-    }
-
-  });
-
-
-// ============================================================
-// NAV INITIALIZATION
-// ============================================================
-
-const desktopNav =
-  document.getElementById(
-    "desktopNav"
-  );
-
-const mobileNav =
-  document.getElementById(
-    "mobileNav"
-  );
-
-
-buildNav(desktopNav);
-buildNav(mobileNav);
+buildNav(
+  document.getElementById("mobileNav")
+);
 
 
 // ============================================================
@@ -361,45 +239,132 @@ function initIcons() {
     );
 
   }
-
 }
+
 
 initIcons();
 
 
 // ============================================================
-// SET INITIAL ACTIVE SECTION
+// PROJECT IMAGE LIGHTBOX
 // ============================================================
 
-window.addEventListener(
-  "load",
-  () => {
+const lightbox =
+  document.getElementById("lightbox");
 
-    const hash =
-      window.location.hash.replace(
-        "#",
-        ""
+const lightboxImage =
+  document.getElementById("lightboxImage");
+
+const lightboxCaption =
+  document.getElementById("lightboxCaption");
+
+
+function openLightbox(
+  src,
+  caption,
+  altText
+) {
+
+  if (!lightbox || !lightboxImage) {
+    return;
+  }
+
+  lightboxImage.src = src;
+
+  lightboxImage.alt =
+    altText ||
+    caption ||
+    "Project screenshot";
+
+  if (lightboxCaption) {
+    lightboxCaption.textContent =
+      caption || "";
+  }
+
+  lightbox.classList.add("open");
+
+  lightbox.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  document.body.classList.add(
+    "lightbox-open"
+  );
+}
+
+
+function closeLightbox() {
+
+  if (!lightbox || !lightboxImage) {
+    return;
+  }
+
+  lightbox.classList.remove("open");
+
+  lightbox.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  document.body.classList.remove(
+    "lightbox-open"
+  );
+
+  lightboxImage.src = "";
+}
+
+
+// Open project image
+
+document
+  .querySelectorAll("[data-lightbox]")
+  .forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+      const image =
+        button.querySelector("img");
+
+      openLightbox(
+        button.dataset.lightbox,
+        button.dataset.caption,
+        image?.alt
       );
 
-    const validSection =
-      NAV_ITEMS.find(
-        (item) =>
-          item.id === hash
-      );
+    });
 
-    if (validSection) {
+  });
 
-      activeId =
-        validSection.id;
 
-      setActiveNav(
-        validSection.id
-      );
+// Close lightbox
 
-    } else {
+document
+  .querySelectorAll("[data-lightbox-close]")
+  .forEach((button) => {
 
-      setActiveNav("home");
+    button.addEventListener(
+      "click",
+      closeLightbox
+    );
+
+  });
+
+
+// Close lightbox with ESC
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key === "Escape" &&
+      lightbox?.classList.contains("open")
+    ) {
+
+      closeLightbox();
 
     }
+
   }
 );
