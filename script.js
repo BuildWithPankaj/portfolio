@@ -244,127 +244,118 @@ function initIcons() {
 
 initIcons();
 
+// ============================================================
+// POLISHED SECTION / CARD ANIMATIONS
+// ============================================================
+
+document.querySelectorAll(".chip-row .chip").forEach((chip, index) => {
+  chip.style.setProperty("--skill-index", index);
+});
+
+document.querySelectorAll(".project-card").forEach((card, index) => {
+  card.style.setProperty("--card-index", index);
+});
+
+document.querySelectorAll(".stat-card").forEach((card, index) => {
+  card.style.setProperty("--stat-index", index);
+});
+
+document.querySelectorAll(".edu-card").forEach((card, index) => {
+  card.style.setProperty("--edu-index", index);
+});
+
+document.querySelectorAll(".timeline-item").forEach((item, index) => {
+  item.style.setProperty("--timeline-index", index);
+});
+
+document.querySelectorAll(".contact-row").forEach((row, index) => {
+  row.style.setProperty("--contact-index", index);
+});
+
+// Preserve each inline progress value as a CSS custom property, then animate
+// the bar from zero when the Skills section enters the viewport.
+document.querySelectorAll(".lang-fill").forEach((bar) => {
+  const targetWidth = bar.style.width || "0%";
+  bar.style.setProperty("--bar-width", targetWidth);
+  // Remove the inline width so CSS can animate from 0 to the target value.
+  bar.style.removeProperty("width");
+});
 
 // ============================================================
-// PROJECT IMAGE LIGHTBOX
+// SIMPLE CUSTOM DESKTOP CURSOR
 // ============================================================
 
-const lightbox =
-  document.getElementById("lightbox");
+const finePointer = window.matchMedia("(pointer: fine)");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-const lightboxImage =
-  document.getElementById("lightboxImage");
+if (finePointer.matches && !reducedMotion.matches) {
+  document.documentElement.classList.add("custom-cursor-enabled");
 
-const lightboxCaption =
-  document.getElementById("lightboxCaption");
+  const cursorDot = document.createElement("div");
+  const cursorRing = document.createElement("div");
 
+  cursorDot.className = "cursor-dot";
+  cursorRing.className = "cursor-ring";
+  cursorDot.setAttribute("aria-hidden", "true");
+  cursorRing.setAttribute("aria-hidden", "true");
+  document.body.append(cursorRing, cursorDot);
 
-function openLightbox(
-  src,
-  caption,
-  altText
-) {
+  const interactiveSelector = [
+    "a",
+    "button",
+    ".chip",
+    ".project-card",
+    ".stat-card",
+    ".edu-card",
+    ".device-tab",
+    ".nav-item"
+  ].join(", ");
 
-  if (!lightbox || !lightboxImage) {
-    return;
-  }
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let ringX = mouseX;
+  let ringY = mouseY;
+  let visible = false;
 
-  lightboxImage.src = src;
+  const showCursor = () => {
+    if (visible) return;
+    visible = true;
+    cursorDot.classList.add("visible");
+    cursorRing.classList.add("visible");
+  };
 
-  lightboxImage.alt =
-    altText ||
-    caption ||
-    "Project screenshot";
+  const hideCursor = () => {
+    visible = false;
+    cursorDot.classList.remove("visible");
+    cursorRing.classList.remove("visible", "is-hovering", "is-clicking");
+  };
 
-  if (lightboxCaption) {
-    lightboxCaption.textContent =
-      caption || "";
-  }
+  const animateCursor = () => {
+    ringX += (mouseX - ringX) * 0.18;
+    ringY += (mouseY - ringY) * 0.18;
 
-  lightbox.classList.add("open");
+    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
 
-  lightbox.setAttribute(
-    "aria-hidden",
-    "false"
-  );
+    requestAnimationFrame(animateCursor);
+  };
 
-  document.body.classList.add(
-    "lightbox-open"
-  );
-}
+  window.addEventListener("mousemove", (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+    showCursor();
 
+    const isInteractive = event.target instanceof Element &&
+      Boolean(event.target.closest(interactiveSelector));
 
-function closeLightbox() {
-
-  if (!lightbox || !lightboxImage) {
-    return;
-  }
-
-  lightbox.classList.remove("open");
-
-  lightbox.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-  document.body.classList.remove(
-    "lightbox-open"
-  );
-
-  lightboxImage.src = "";
-}
-
-
-// Open project image
-
-document
-  .querySelectorAll("[data-lightbox]")
-  .forEach((button) => {
-
-    button.addEventListener("click", () => {
-
-      const image =
-        button.querySelector("img");
-
-      openLightbox(
-        button.dataset.lightbox,
-        button.dataset.caption,
-        image?.alt
-      );
-
-    });
-
+    cursorRing.classList.toggle("is-hovering", isInteractive);
+    cursorDot.classList.toggle("is-hovering", isInteractive);
   });
 
+  document.addEventListener("mousedown", () => cursorRing.classList.add("is-clicking"));
+  document.addEventListener("mouseup", () => cursorRing.classList.remove("is-clicking"));
+  document.addEventListener("mouseleave", hideCursor);
+  document.addEventListener("mouseenter", showCursor);
 
-// Close lightbox
-
-document
-  .querySelectorAll("[data-lightbox-close]")
-  .forEach((button) => {
-
-    button.addEventListener(
-      "click",
-      closeLightbox
-    );
-
-  });
-
-
-// Close lightbox with ESC
-
-document.addEventListener(
-  "keydown",
-  (event) => {
-
-    if (
-      event.key === "Escape" &&
-      lightbox?.classList.contains("open")
-    ) {
-
-      closeLightbox();
-
-    }
-
-  }
-);
+  animateCursor();
+}
