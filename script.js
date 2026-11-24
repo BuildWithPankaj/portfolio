@@ -11,3 +11,28 @@ document.querySelector('#gallery-close').addEventListener('click',()=>gallery.cl
 gallery.addEventListener('click',e=>{if(e.target===gallery){const r=gallery.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)gallery.close();}});
 gallery.addEventListener('close',()=>{full.removeAttribute('src');trigger?.focus();});
 if('IntersectionObserver' in window){const links=[...nav.querySelectorAll('a[href^="#"]')];const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){links.forEach(a=>{if(a.hash==='#'+entry.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}}},{rootMargin:'-20% 0px -55% 0px'});document.querySelectorAll('main section[id]').forEach(s=>observer.observe(s));}
+
+// Keep the sticky navigation subtle; use passive scrolling and one update per frame.
+const header = document.querySelector('.site-header');
+const progress = document.querySelector('.scroll-progress');
+let queued = false;
+function updateHeader(){
+  const y = window.scrollY;
+  const range = document.documentElement.scrollHeight - window.innerHeight;
+  header.classList.toggle('is-scrolled', y > 12);
+  progress.style.transform = `scaleX(${range > 0 ? Math.min(1, Math.max(0,y/range)) : 0})`;
+  queued = false;
+}
+function scheduleHeader(){if(!queued){queued=true;requestAnimationFrame(updateHeader);}}
+window.addEventListener('scroll',scheduleHeader,{passive:true});
+window.addEventListener('resize',scheduleHeader);
+updateHeader();
+// Reveal each section once, without hiding content when JavaScript is unavailable.
+if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const reveal = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){entry.target.classList.add('reveal-in');reveal.unobserve(entry.target);}
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.section-head,.project,.skill,.experience-side,.timeline article,.steps article,.education > div,.contact-inner > div').forEach(el=>reveal.observe(el));
+}
